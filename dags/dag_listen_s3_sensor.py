@@ -1,14 +1,14 @@
+import airflow
 from datetime import datetime, timedelta
 from airflow.models import DAG
-from airflow.operators.s3_key_sensor import S3KeySensor
+from airflow.sensors.s3_key_sensor import S3KeySensor
 from airflow.operators.python_operator import PythonOperator
-from airflow.utils.dates import days_ago
 
 schedule = timedelta(minutes=5)
 
 args = {
  'owner': 'airflow',
- 'start_date': days_ago(1),
+ 'start_date': airflow.utils.dates.days_ago(0),
  'depends_on_past': False,
 }
 
