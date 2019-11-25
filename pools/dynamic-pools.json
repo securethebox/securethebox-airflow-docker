@@ -1,1 +1,1 @@
-[{"te1st": {"description": "te1st pool", "slots": 1}}, {"te2st": {"description": "te2st pool", "slots": 1}}, {"te3aaaast": {"description": "te3aaaast pool", "slots": 1}}]
+{"te1st": {"description": "te1st pool", "slots": 1}, "te2st": {"description": "te2st pool", "slots": 1}, "te3aaaast": {"description": "te3aaaast pool", "slots": 1}, "pool1": {"description": "pool1 pool", "slots": 4}}

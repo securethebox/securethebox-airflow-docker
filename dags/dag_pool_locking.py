@@ -5,6 +5,7 @@ from airflow.operators.python_operator import PythonOperator
 from airflow.operators.python_operator import BranchPythonOperator
 import pendulum
 import datetime
+import time
 
 from controllers.airflow_controller import AirflowController
 
@@ -18,22 +19,28 @@ args = {
 dag = DAG(
     dag_id='dag_pool_locking',
     default_args=args,
-    schedule_interval=None,
+    schedule_interval='@once',
     catchup=False,
 )
 
 def addAirflowPool():
     ac = AirflowController()
     ac.loadDynamicPools()
-    ac.addDynamicPool("te1st", 5)
-    ac.addDynamicPool("te2st", 4)
-    ac.addDynamicPool("te2st", 4)
-    ac.addDynamicPool("te2st", 4)
-    ac.addDynamicPool("te2st", 4)
-    ac.addDynamicPool("te2st", 1)
-    ac.addDynamicPool("te3aaaast", 1)
-    ac.addDynamicPool("te1st", 1)
+    ac.addDynamicPool("pool1", 4)
     ac.importDynamicPoolFile()
+
+def longTask():
+    print("Start")
+    time.sleep(5)
+    print("Finished")
+
+def group(t):
+    return PythonOperator(
+        task_id='longtask'+str(t),
+        python_callable=longTask,
+        pool='pool1',
+        dag=dag
+    )
 
 t1 = PythonOperator(
     task_id='addAirflowPool',
@@ -47,4 +54,5 @@ t4 = DummyOperator(
     dag=dag
 )
 
-t1 >> t4
+for x in range(0,10):
+    t1 >> group(x) >> t4

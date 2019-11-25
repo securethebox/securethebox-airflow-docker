@@ -17,7 +17,8 @@ services:
         build: 
             context: .
             dockerfile: Dockerfile
-        image: securethebox-airflow-docker:latest
+        # image: securethebox-airflow-docker:latest
+        image: puckel/docker-airflow:1.10.6
         restart: always
         depends_on:
             - postgres
@@ -43,7 +44,8 @@ services:
             retries: 3
 
     scheduler:
-        image: securethebox-airflow-docker:latest
+        # image: securethebox-airflow-docker:latest
+        image: puckel/docker-airflow:1.10.6
         restart: always
         depends_on:
             - webserver
@@ -61,7 +63,8 @@ services:
         command: scheduler
 
     worker:
-        image: securethebox-airflow-docker:latest
+        # image: securethebox-airflow-docker:latest
+        image: puckel/docker-airflow:1.10.6
         restart: always
         depends_on:
             - scheduler

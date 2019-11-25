@@ -1,0 +1,6 @@
+{
+    "default_pool": {
+        "description": "Default pool",
+        "slots": 128
+    }
+}
