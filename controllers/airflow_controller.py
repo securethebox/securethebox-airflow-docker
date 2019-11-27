@@ -3,7 +3,6 @@ import os
 import json
 
 class AirflowController():
-
     def __init__(self):
         self.jsonDynamicPoolFilePath = str(os.getcwd())+"/dags/pools/dynamic-pools.json"
         self.jsonPoolData = {}
@@ -23,6 +22,11 @@ class AirflowController():
         subprocess.Popen(command,shell=True)
         print("Should load new Pools")
 
+    def createHttpConnection(self, conn_id, conn_uri):
+        command = "airflow connections -a --conn_id "+conn_id+" --conn_host "+conn_uri+" --conn_type http"
+        subprocess.Popen(command,shell=True)
+        print("Added new http connection")
+# airflow connections -a --conn_id securethebox --conn_uri https://securethebox.us --conn_type http
 if __name__ == "__main__":
     ac = AirflowController()
     ac.loadDynamicPools()
